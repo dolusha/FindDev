@@ -31,13 +31,28 @@ class ViewController: UIViewController {
         }
         return searchBar
     }()
+    private let gradientLayer = CAGradientLayer()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .gray
+        setupGradientBackground()
         hideKeyboardWhenTappedAround()
         setupUI()
     }
+    private func setupGradientBackground() {
+        gradientLayer.colors = [
+            UIColor(hex: "158e").cgColor,
+            UIColor(hex: "AD57CE").cgColor
+        ]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 1)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        gradientLayer.frame = view.bounds
+    }
+    
     private func setupUI() {
         view.addSubview(titleLabel)
         view.addSubview(searchBar)
