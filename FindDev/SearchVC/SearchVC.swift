@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SearchVC: UIViewController {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Find developer"
@@ -71,7 +71,7 @@ class ViewController: UIViewController {
     }
 
 }
-extension ViewController: UISearchBarDelegate {
+extension SearchVC: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
