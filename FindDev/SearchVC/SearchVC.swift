@@ -44,26 +44,14 @@ class SearchVC: UIViewController {
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
-    private let gradientLayer = CAGradientLayer()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupGradientBackground()
         hideKeyboardWhenTappedAround()
         setupUI()
     }
-    private func setupGradientBackground() {
-        gradientLayer.colors = [
-            UIColor(hex: "158e").cgColor,
-            UIColor(hex: "AD57CE").cgColor
-        ]
-        gradientLayer.startPoint = CGPoint(x: 0.5, y: 1)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
-        view.layer.insertSublayer(gradientLayer, at: 0)
-    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        gradientLayer.frame = view.bounds
+        view.applyGradient(colors: [UIColor(hex: "480A54"), UIColor(hex: "AD57CE")])
     }
     private func setupUI() {
         view.addSubview(titleLabel)

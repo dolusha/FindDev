@@ -34,7 +34,7 @@ class GitHubUserCell: UITableViewCell {
     }()
     private lazy var statsLabel: UILabel = {
         let statsLabel = UILabel()
-        statsLabel.textColor = .systemGray6
+        statsLabel.textColor = .white
         statsLabel.font = .systemFont(ofSize: 14, weight: .medium)
         statsLabel.translatesAutoresizingMaskIntoConstraints = false
         return statsLabel
@@ -104,7 +104,7 @@ class GitHubUserCell: UITableViewCell {
             statsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             statsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            subscribeButton.topAnchor.constraint(equalTo: statsLabel.bottomAnchor, constant: 4),
+            subscribeButton.topAnchor.constraint(equalTo: statsLabel.bottomAnchor, constant: 8),
             subscribeButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
             visitFullPage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
