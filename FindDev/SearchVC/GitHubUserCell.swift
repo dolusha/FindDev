@@ -10,6 +10,7 @@ import UIKit
 import SwiftUI
 class GitHubUserCell: UITableViewCell {
     var onVisitTapped: (() -> Void)?
+    var onSubscribeTapped: ((Bool) -> Void)?
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -41,17 +42,31 @@ class GitHubUserCell: UITableViewCell {
         return statsLabel
     }()
     private lazy var subscribeButton: UIButton = {
-        var config = UIButton.Configuration.filled()
-        config.title = "Subscribe"
-        config.baseBackgroundColor = .systemRed
-        config.baseForegroundColor = .white
-        config.cornerStyle = .capsule
-        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)
-        
-        let button = UIButton(configuration: config)
+        let button = UIButton(configuration: makeSubscribeConfig(isSubscribed: false))
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(subscribeTapped), for: .touchUpInside)
         return button
     }()
+    private func makeSubscribeConfig(isSubscribed: Bool) -> UIButton.Configuration {
+        var config = UIButton.Configuration.filled()
+        config.title = isSubscribed ? "Following" : "Subscribe"
+        config.baseBackgroundColor = isSubscribed ? .systemGray4 : UIColor(hex: "D80808")
+        config.baseForegroundColor = isSubscribed ? .white : .white
+        config.cornerStyle = .capsule
+        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)
+        return config
+    }
+    @objc private func subscribeTapped() {
+        let wasSubscribed = subscribeButton.configuration?.title == "Following"
+        let newState = !wasSubscribed
+        
+        subscribeButton.configuration = makeSubscribeConfig(isSubscribed: newState)
+        onSubscribeTapped?(newState)
+    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        subscribeButton.configuration = makeSubscribeConfig(isSubscribed: false)
+    }
     private lazy var visitFullPage: UIButton = {
         var config = UIButton.Configuration.filled()
         config.title = "Visit full page"
@@ -117,10 +132,12 @@ class GitHubUserCell: UITableViewCell {
             visitFullPage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
         ])
     }
-    func configure(with user: GitHubUser) {
+    func configure(with user: GitHubUser, isFollowed: Bool) {
         loginLabel.text = "@\(user.login)"
         nameLabel.text = user.name ?? "Unknown"
         statsLabel.text = "\(user.followers) followers · \(user.following) following"
+        
+        subscribeButton.configuration = makeSubscribeConfig(isSubscribed: isFollowed)
         
         Task {
             guard let url = URL(string: user.avatarUrl) else { return }

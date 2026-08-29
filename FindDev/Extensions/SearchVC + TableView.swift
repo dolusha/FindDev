@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftData
 import UIKit
 extension SearchVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -19,7 +20,11 @@ extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GitHubUserCell", for: indexPath) as! GitHubUserCell
         if let user = foundUser {
-            cell.configure(with: user)
+            let isFollowed = checkIfFollowed(login: user.login)
+            cell.configure(with: user, isFollowed: isFollowed)
+            cell.onSubscribeTapped = { [weak self] newState in
+                self?.updateSubscription(login: user.login, isFollowed: newState)
+            }
             cell.onVisitTapped = { [weak self] in
                 let fullPageVC = FullPageVC()
                 self?.navigationController?.pushViewController(fullPageVC, animated: true)
@@ -28,4 +33,24 @@ extension SearchVC: UITableViewDataSource {
         }
         return cell
     }
+}
+extension SearchVC {
+    private func checkIfFollowed(login: String) -> Bool {
+            let descriptor = FetchDescriptor<FollowedUser>(predicate: #Predicate { $0.login == login })
+            let results = (try? modelContext.fetch(descriptor)) ?? []
+            return !results.isEmpty
+        }
+        
+        private func updateSubscription(login: String, isFollowed: Bool) {
+            if isFollowed {
+                let newFollow = FollowedUser(login: login)
+                modelContext.insert(newFollow)
+            } else {
+                let descriptor = FetchDescriptor<FollowedUser>(predicate: #Predicate { $0.login == login })
+                if let existing = try? modelContext.fetch(descriptor).first {
+                    modelContext.delete(existing)
+                }
+            }
+            try? modelContext.save()
+        }
 }

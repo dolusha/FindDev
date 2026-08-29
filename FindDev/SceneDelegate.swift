@@ -6,19 +6,21 @@
 //
 
 import UIKit
-
+import SwiftData
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var modelContainer: ModelContainer!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
         
+        modelContainer = try! ModelContainer(for: FollowedUser.self)
         let rootVC = SearchVC()
-        let navController = UINavigationController(rootViewController: rootVC)
+        rootVC.modelContext = modelContainer.mainContext
         
+        let navController = UINavigationController(rootViewController: rootVC)
         self.window?.rootViewController = navController
         self.window?.makeKeyAndVisible()
     }

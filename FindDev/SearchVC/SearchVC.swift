@@ -6,11 +6,11 @@
 //
 
 import UIKit
-
+import SwiftData
 class SearchVC: UIViewController {
     var searchTask: Task<Void, Never>?
     var foundUser: GitHubUser?
-    
+    var modelContext: ModelContext!
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Find developer"
