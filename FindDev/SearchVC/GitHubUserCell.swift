@@ -11,7 +11,7 @@ import SwiftUI
 class GitHubUserCell: UITableViewCell {
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -27,7 +27,7 @@ class GitHubUserCell: UITableViewCell {
     }()
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.textColor = .white
+        nameLabel.textColor = .black
         nameLabel.font = .systemFont(ofSize: 14, weight: .regular)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
@@ -51,7 +51,7 @@ class GitHubUserCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16))
     }
     private func setupUI() {
-        backgroundColor = .black
+        backgroundColor = .clear
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 20
         
@@ -77,7 +77,7 @@ class GitHubUserCell: UITableViewCell {
         ])
     }
     func configure(with user: GitHubUser) {
-        loginLabel.text = user.login
+        loginLabel.text = "@\(user.login)"
         nameLabel.text = user.name ?? "Unknown"
         statsLabel.text = "\(user.followers) followers · \(user.following) following"
         
@@ -85,7 +85,7 @@ class GitHubUserCell: UITableViewCell {
             guard let url = URL(string: user.avatarUrl) else { return }
             if let (data, _) = try? await URLSession.shared.data(from: url),
                let image = UIImage(data: data) {
-                self.imageView?.image = image
+                self.avatarImageView.image = image
             }
         }
     }

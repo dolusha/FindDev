@@ -8,6 +8,9 @@
 import UIKit
 
 class SearchVC: UIViewController {
+    var searchTask: Task<Void, Never>?
+    var foundUser: GitHubUser?
+    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Find developer"
@@ -31,17 +34,18 @@ class SearchVC: UIViewController {
         }
         return searchBar
     }()
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = .clear
+        table.separatorStyle = .none
         table.delegate = self
         table.dataSource = self
-        table.register(UITableViewCell.self, forCellReuseIdentifier: "GitHubUserCell")
+        table.register(GitHubUserCell.self, forCellReuseIdentifier: "GitHubUserCell")
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
     }()
     private let gradientLayer = CAGradientLayer()
-    private var foundUser: GitHubUser?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGradientBackground()
@@ -61,7 +65,6 @@ class SearchVC: UIViewController {
         super.viewDidLayoutSubviews()
         gradientLayer.frame = view.bounds
     }
-    
     private func setupUI() {
         view.addSubview(titleLabel)
         view.addSubview(searchBar)
@@ -82,31 +85,5 @@ class SearchVC: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 
         ])
-    }
-}
-extension SearchVC: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-    }
-    func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
-        return true
-    }
-}
-extension SearchVC: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
-    }
-}
-extension SearchVC: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foundUser != nil ? 1 : 0
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "GitHubUserCell", for: indexPath) as! GitHubUserCell
-        if let user = foundUser {
-            cell.configure(with: user)
-        }
-        return cell
     }
 }
