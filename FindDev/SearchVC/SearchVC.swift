@@ -57,6 +57,10 @@ class SearchVC: UIViewController {
         hideKeyboardWhenTappedAround()
         setupUI()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         view.applyGradient(colors: [UIColor(hex: "480A54"), UIColor(hex: "AD57CE")])

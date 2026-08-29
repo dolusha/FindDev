@@ -26,4 +26,8 @@ class YouVC: UIViewController {
         super.viewDidLayoutSubviews()
         view.applyGradient(colors: [UIColor(hex: "480A54"), UIColor(hex: "AD57CE")])
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
 }
