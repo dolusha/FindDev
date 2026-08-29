@@ -10,7 +10,15 @@ import SwiftData
 class SearchVC: UIViewController {
     var searchTask: Task<Void, Never>?
     var foundUser: GitHubUser?
-    var modelContext: ModelContext!
+    let modelContext: ModelContext
+    
+    init(modelContext: ModelContext) {
+        self.modelContext = modelContext
+        super.init(nibName: nil, bundle: nil)
+    }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Find developer"

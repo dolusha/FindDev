@@ -13,16 +13,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var modelContainer: ModelContainer!
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let scene = (scene as? UIWindowScene) else { return }
-        self.window = UIWindow(windowScene: scene)
-        
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(windowScene: windowScene)
+            
         modelContainer = try! ModelContainer(for: FollowedUser.self)
-        let rootVC = SearchVC()
-        rootVC.modelContext = modelContainer.mainContext
-        
-        let navController = UINavigationController(rootViewController: rootVC)
-        self.window?.rootViewController = navController
-        self.window?.makeKeyAndVisible()
+            
+        let tabBarController = MainTabBarController(modelContext: modelContainer.mainContext)
+            
+        window?.rootViewController = tabBarController
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
