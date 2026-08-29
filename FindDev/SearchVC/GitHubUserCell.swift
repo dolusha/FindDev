@@ -11,7 +11,7 @@ import SwiftUI
 class GitHubUserCell: UITableViewCell {
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .white
         label.font = .systemFont(ofSize: 20, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -27,17 +27,41 @@ class GitHubUserCell: UITableViewCell {
     }()
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.textColor = .black
+        nameLabel.textColor = .white
         nameLabel.font = .systemFont(ofSize: 14, weight: .regular)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         return nameLabel
     }()
     private lazy var statsLabel: UILabel = {
         let statsLabel = UILabel()
-        statsLabel.textColor = .darkGray
+        statsLabel.textColor = .systemGray6
         statsLabel.font = .systemFont(ofSize: 14, weight: .medium)
         statsLabel.translatesAutoresizingMaskIntoConstraints = false
         return statsLabel
+    }()
+    private lazy var subscribeButton: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.title = "Subscribe"
+        config.baseBackgroundColor = .systemRed
+        config.baseForegroundColor = .white
+        config.cornerStyle = .capsule
+        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)
+        
+        let button = UIButton(configuration: config)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    private lazy var visitFullPage: UIButton = {
+        var config = UIButton.Configuration.filled()
+        config.title = "Visit full page"
+        config.baseBackgroundColor = .systemGreen
+        config.baseForegroundColor = .white
+        config.cornerStyle = .capsule
+        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 16, bottom: 10, trailing: 16)
+        
+        let button = UIButton(configuration: config)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
@@ -52,13 +76,18 @@ class GitHubUserCell: UITableViewCell {
     }
     private func setupUI() {
         backgroundColor = .clear
-        contentView.backgroundColor = .white
+        selectionStyle = .none
+        contentView.backgroundColor = UIColor(hex: "480A54")
+        contentView.layer.borderColor = UIColor.white.cgColor
+        contentView.layer.borderWidth = 2
         contentView.layer.cornerRadius = 20
         
         contentView.addSubview(avatarImageView)
         contentView.addSubview(loginLabel)
         contentView.addSubview(nameLabel)
         contentView.addSubview(statsLabel)
+        contentView.addSubview(subscribeButton)
+        contentView.addSubview(visitFullPage)
         
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
@@ -72,8 +101,15 @@ class GitHubUserCell: UITableViewCell {
             nameLabel.topAnchor.constraint(equalTo: loginLabel.bottomAnchor, constant: 4),
             nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             
-            statsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12),
+            statsLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8),
             statsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            subscribeButton.topAnchor.constraint(equalTo: statsLabel.bottomAnchor, constant: 4),
+            subscribeButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            visitFullPage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            visitFullPage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            visitFullPage.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12),
         ])
     }
     func configure(with user: GitHubUser) {
