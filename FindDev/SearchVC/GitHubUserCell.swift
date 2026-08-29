@@ -77,9 +77,9 @@ class GitHubUserCell: UITableViewCell {
         ])
     }
     func configure(with user: GitHubUser) {
-        let loginLabel = user.login
-        let nameLabel = user.name ?? "Unknown"
-        let statsLabel = "\(user.followers) followers · \(user.following) following"
+        loginLabel.text = user.login
+        nameLabel.text = user.name ?? "Unknown"
+        statsLabel.text = "\(user.followers) followers · \(user.following) following"
         
         Task {
             guard let url = URL(string: user.avatarUrl) else { return }

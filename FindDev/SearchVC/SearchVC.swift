@@ -31,8 +31,17 @@ class SearchVC: UIViewController {
         }
         return searchBar
     }()
+    private lazy var tableView: UITableView = {
+        let table = UITableView()
+        table.backgroundColor = .clear
+        table.delegate = self
+        table.dataSource = self
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "GitHubUserCell")
+        table.translatesAutoresizingMaskIntoConstraints = false
+        return table
+    }()
     private let gradientLayer = CAGradientLayer()
-
+    private var foundUser: GitHubUser?
     override func viewDidLoad() {
         super.viewDidLoad()
         setupGradientBackground()
@@ -56,7 +65,7 @@ class SearchVC: UIViewController {
     private func setupUI() {
         view.addSubview(titleLabel)
         view.addSubview(searchBar)
-        
+        view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -66,10 +75,14 @@ class SearchVC: UIViewController {
             searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             searchBar.heightAnchor.constraint(equalToConstant: 50),
+            
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 
         ])
     }
-
 }
 extension SearchVC: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -78,5 +91,22 @@ extension SearchVC: UISearchBarDelegate {
     }
     func searchBarShouldEndEditing(_ searchBar: UISearchBar) -> Bool {
         return true
+    }
+}
+extension SearchVC: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+}
+extension SearchVC: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return foundUser != nil ? 1 : 0
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GitHubUserCell", for: indexPath) as! GitHubUserCell
+        if let user = foundUser {
+            cell.configure(with: user)
+        }
+        return cell
     }
 }
