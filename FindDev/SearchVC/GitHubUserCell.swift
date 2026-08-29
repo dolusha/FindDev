@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SwiftUI
 class GitHubUserCell: UITableViewCell {
+    var onVisitTapped: (() -> Void)?
     private lazy var loginLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -61,8 +62,12 @@ class GitHubUserCell: UITableViewCell {
         
         let button = UIButton(configuration: config)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(visitButtonTapped), for: .touchUpInside)
         return button
     }()
+    @objc private func visitButtonTapped() {
+        onVisitTapped?()
+    }
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         setupUI()

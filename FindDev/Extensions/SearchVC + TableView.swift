@@ -20,6 +20,11 @@ extension SearchVC: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GitHubUserCell", for: indexPath) as! GitHubUserCell
         if let user = foundUser {
             cell.configure(with: user)
+            cell.onVisitTapped = { [weak self] in
+                let fullPageVC = FullPageVC()
+                self?.navigationController?.pushViewController(fullPageVC, animated: true)
+            }
+            
         }
         return cell
     }

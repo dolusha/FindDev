@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class FullPageVC: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // 
