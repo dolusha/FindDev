@@ -19,4 +19,27 @@ enum FindGitHubService {
         }
         return try await NetworkManager.fetch(url)
     }
+    static func fetchFollowing(login: String) async throws -> [GitHubFollowItem] {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.github.com"
+        components.path = "/users/\(login)/following"
+        
+        guard let url = components.url else {
+            throw NetworkError.invalidURL
+        }
+        return try await NetworkManager.fetch(url)
+    }
+    
+    static func fetchFollowers(login: String) async throws -> [GitHubFollowItem] {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.github.com"
+        components.path = "/users/\(login)/followers"
+        
+        guard let url = components.url else {
+            throw NetworkError.invalidURL
+        }
+        return try await NetworkManager.fetch(url)
+    }
 }
