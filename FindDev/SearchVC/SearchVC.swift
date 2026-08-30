@@ -19,17 +19,7 @@ class SearchVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    lazy var scrollView: UIScrollView = {
-        let scroll = UIScrollView()
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        return scroll
-    }()
-    
-    lazy var contentContainer: UIView = {
-        let v = UIView()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        return v
-    }()
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Find developer"
@@ -77,36 +67,23 @@ class SearchVC: UIViewController {
         view.applyGradient(colors: [UIColor(hex: "480A54"), UIColor(hex: "AD57CE")])
     }
     private func setupUI() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentContainer)
-        
-        [titleLabel, searchBar, tableView].forEach { contentContainer.addSubview($0) }
+        view.addSubview(titleLabel)
+        view.addSubview(searchBar)
+        view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
-            contentContainer.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentContainer.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentContainer.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            contentContainer.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            contentContainer.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            
-            titleLabel.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 40),
-            titleLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
+            titleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -150),
             
             searchBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            searchBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
-            searchBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -20),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             searchBar.heightAnchor.constraint(equalToConstant: 50),
             
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -20),
-            tableView.heightAnchor.constraint(equalToConstant: 320),
-            tableView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -20),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }

@@ -34,64 +34,6 @@
             endingLineNumber = "41"
             landmarkName = "profileImageView"
             landmarkType = "24">
-            <Locations>
-               <Location
-                  uuid = "738F7FC4-E0E4-4399-A22A-79674D788AA1 - e709d363a47839f1"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FindDev.YouVC.profileImageView.getter : __C.UIImageView"
-                  moduleName = "FindDev.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac/Desktop/Advanced%20programming%20in%20Swift.%20Completed%20lessons./FindDev/FindDev/YouVC/YouVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41">
-               </Location>
-               <Location
-                  uuid = "738F7FC4-E0E4-4399-A22A-79674D788AA1 - b86f73e3fa5d346d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; __C.UIImageView in FindDev.YouVC.profileImageView.getter : __C.UIImageView"
-                  moduleName = "FindDev.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac/Desktop/Advanced%20programming%20in%20Swift.%20Completed%20lessons./FindDev/FindDev/YouVC/YouVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "42"
-                  endingLineNumber = "42">
-               </Location>
-               <Location
-                  uuid = "738F7FC4-E0E4-4399-A22A-79674D788AA1 - 778a6928d29b2205"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FindDev.YouVC.profileImageView.setter : __C.UIImageView"
-                  moduleName = "FindDev.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac/Desktop/Advanced%20programming%20in%20Swift.%20Completed%20lessons./FindDev/FindDev/YouVC/YouVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41">
-               </Location>
-               <Location
-                  uuid = "738F7FC4-E0E4-4399-A22A-79674D788AA1 - a33f693ac0746cf4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FindDev.YouVC.profileImageView.modify : __C.UIImageView"
-                  moduleName = "FindDev.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mac/Desktop/Advanced%20programming%20in%20Swift.%20Completed%20lessons./FindDev/FindDev/YouVC/YouVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "41"
-                  endingLineNumber = "41">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
