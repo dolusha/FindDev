@@ -19,6 +19,17 @@ class SearchVC: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        return scroll
+    }()
+    
+    lazy var contentContainer: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }()
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Find developer"
@@ -87,15 +98,15 @@ class SearchVC: UIViewController {
             titleLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
             
             searchBar.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            searchBar.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            searchBar.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -20),
             searchBar.heightAnchor.constraint(equalToConstant: 50),
             
             tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-
+            tableView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            tableView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -20),
+            tableView.heightAnchor.constraint(equalToConstant: 320),
+            tableView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -20),
         ])
     }
 }
