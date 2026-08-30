@@ -11,8 +11,10 @@ import SwiftData
 @Model
 class FollowedUser {
     var login: String
+    var avatarUrl: String
     
-    init(login: String) {
+    init(login: String, avatarUrl: String) {
         self.login = login
+        self.avatarUrl = avatarUrl
     }
 }
