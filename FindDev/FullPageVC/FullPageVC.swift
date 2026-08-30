@@ -38,18 +38,6 @@ class FullPageVC: UIViewController {
         return v
     }()
     
-    lazy var backButton: UIButton = {
-        var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: "chevron.left")
-        config.baseBackgroundColor = .black.withAlphaComponent(0.3)
-        config.baseForegroundColor = .white
-        config.cornerStyle = .capsule
-        let button = UIButton(configuration: config)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
-        return button
-    }()
-    
     lazy var avatarImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -127,7 +115,7 @@ class FullPageVC: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentContainer)
         
-        [backButton, avatarImageView, usernameLabel, subscribeButton,
+        [avatarImageView, usernameLabel, subscribeButton,
          followingTitleLabel, followingCollectionView,
          followersTitleLabel, followersCollectionView].forEach { contentContainer.addSubview($0) }
         
@@ -143,12 +131,7 @@ class FullPageVC: UIViewController {
             contentContainer.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             contentContainer.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
             
-            backButton.topAnchor.constraint(equalTo: contentContainer.safeAreaLayoutGuide.topAnchor, constant: 16),
-            backButton.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
-            backButton.widthAnchor.constraint(equalToConstant: 44),
-            backButton.heightAnchor.constraint(equalToConstant: 44),
-            
-            avatarImageView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 16),
+            avatarImageView.topAnchor.constraint(equalTo: contentContainer.safeAreaLayoutGuide.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
             avatarImageView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -20),
             avatarImageView.heightAnchor.constraint(equalToConstant: 260),
@@ -212,9 +195,6 @@ class FullPageVC: UIViewController {
     }
     
     // MARK: Action
-    @objc func backTapped() {
-        navigationController?.popViewController(animated: true)
-    }
     @objc func subscribeTapped() {
         guard let user = user else { return }
         isSubscribed.toggle()
