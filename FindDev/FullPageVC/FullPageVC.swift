@@ -126,7 +126,36 @@ class FullPageVC: UIViewController {
     
     
     // MARK: Data
-    
+    private func loadData() {
+        isSubscribed = SubscriptionService.isFollowed(login: login, context: modelContext)
+        subscribeButton.configureSubscribeStyle(isFollowed: isSubscribed)
+        
+        Task {
+            do {
+                async let profile = FindGitHubService.fetchUser(for: login)
+                async let following = FindGitHubService.fetchFollowing(login: login)
+                async let followers = FindGitHubService.fetchFollowers(login: login)
+                
+                let (loadedUser, loadedFollowing, loadedFollowers) = try await (profile, following, followers)
+                
+                self.user = loadedUser
+                self.followingList = loadedFollowing
+                self.followersList = loadedFollowers
+                
+                self.usernameLabel.text = "@\(loadedUser.login)"
+                self.followingCollectionView.reloadData()
+                self.followersCollectionView.reloadData()
+                
+                if let url = URL(string: loadedUser.avatarUrl),
+                   let (data, _) = try? await URLSession.shared.data(from: url),
+                   let image = UIImage(data: data) {
+                    self.avatarImageView.image = image
+                }
+            } catch {
+                print("Error with loading profile: \(error)")
+            }
+        }
+    }
     
     // MARK: Action
     @objc func backTapped() {
