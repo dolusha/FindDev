@@ -111,7 +111,8 @@ class FullPageVC: UIViewController {
     // MARK: lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 
+        setupUI()
+        loadData()
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -122,7 +123,60 @@ class FullPageVC: UIViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
     // MARK: setup
-    
+    private func setupUI() {
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentContainer)
+        
+        [backButton, avatarImageView, usernameLabel, subscribeButton,
+         followingTitleLabel, followingCollectionView,
+         followersTitleLabel, followersCollectionView].forEach { contentContainer.addSubview($0) }
+        
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            contentContainer.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            contentContainer.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
+            contentContainer.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
+            contentContainer.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
+            contentContainer.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
+            
+            backButton.topAnchor.constraint(equalTo: contentContainer.safeAreaLayoutGuide.topAnchor, constant: 16),
+            backButton.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            backButton.widthAnchor.constraint(equalToConstant: 44),
+            backButton.heightAnchor.constraint(equalToConstant: 44),
+            
+            avatarImageView.topAnchor.constraint(equalTo: backButton.bottomAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            avatarImageView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -20),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 260),
+            
+            usernameLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+            usernameLabel.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
+            
+            subscribeButton.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 12),
+            subscribeButton.centerXAnchor.constraint(equalTo: contentContainer.centerXAnchor),
+            
+            followingTitleLabel.topAnchor.constraint(equalTo: subscribeButton.bottomAnchor, constant: 24),
+            followingTitleLabel.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            
+            followingCollectionView.topAnchor.constraint(equalTo: followingTitleLabel.bottomAnchor, constant: 12),
+            followingCollectionView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            followingCollectionView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            followingCollectionView.heightAnchor.constraint(equalToConstant: 150),
+            
+            followersTitleLabel.topAnchor.constraint(equalTo: followingCollectionView.bottomAnchor, constant: 16),
+            followersTitleLabel.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            
+            followersCollectionView.topAnchor.constraint(equalTo: followersTitleLabel.bottomAnchor, constant: 12),
+            followersCollectionView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 20),
+            followersCollectionView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor),
+            followersCollectionView.heightAnchor.constraint(equalToConstant: 150),
+            followersCollectionView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -30),
+        ])
+    }
     
     
     // MARK: Data

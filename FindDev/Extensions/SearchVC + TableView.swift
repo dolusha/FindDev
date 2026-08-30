@@ -20,14 +20,18 @@ extension SearchVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GitHubUserCell", for: indexPath) as! GitHubUserCell
         if let user = foundUser {
-            let isFollowed = checkIfFollowed(login: user.login)
+            
+            let isFollowed = SubscriptionService.isFollowed(login: user.login, context: modelContext)
             cell.configure(with: user, isFollowed: isFollowed)
+            
             cell.onSubscribeTapped = { [weak self] newState in
-                self?.updateSubscription(user: user, isFollowed: newState)
+                guard let self else { return }
+                SubscriptionService.toggle(login: user.login, avatarUrl: user.avatarUrl, isFollowed: newState, context: self.modelContext)
             }
             cell.onVisitTapped = { [weak self] in
-                let fullPageVC = FullPageVC()
-                self?.navigationController?.pushViewController(fullPageVC, animated: true)
+                guard let self else { return }
+                let fullPageVC = FullPageVC(login: user.login, modelContext: self.modelContext)
+                self.navigationController?.pushViewController(fullPageVC, animated: true)
             }
         }
         return cell
