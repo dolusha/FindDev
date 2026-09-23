@@ -167,7 +167,9 @@ class FullPageVC: UIViewController {
         isSubscribed = SubscriptionService.isFollowed(login: login, context: modelContext)
         subscribeButton.configureSubscribeStyle(isFollowed: isSubscribed)
         
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
+            
             do {
                 async let profile = FindGitHubService.fetchUser(for: login)
                 async let following = FindGitHubService.fetchFollowing(login: login)
@@ -186,6 +188,8 @@ class FullPageVC: UIViewController {
                 if let url = URL(string: loadedUser.avatarUrl),
                    let (data, _) = try? await URLSession.shared.data(from: url),
                    let image = UIImage(data: data) {
+                    
+                    guard !Task.isCancelled else { return }
                     self.avatarImageView.image = image
                 }
             } catch {
