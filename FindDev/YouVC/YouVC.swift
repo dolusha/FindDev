@@ -82,6 +82,7 @@ class YouVC: UIViewController {
         collection.register(FollowingGridCell.self, forCellWithReuseIdentifier: "FollowingGridCell")
         return collection
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -145,11 +146,16 @@ class YouVC: UIViewController {
         collectionView.reloadData()
     }
     private func loadMyAvatar() {
-        Task {
+        Task { [weak self] in
+            guard let self else { return }
+            
             do {
                 let user = try await FindGitHubService.fetchUser(for: "dolusha")
                 guard let url = URL(string: user.avatarUrl) else { return }
                 let (data, _) = try await URLSession.shared.data(from: url)
+                
+                guard !Task.isCancelled else { return }
+                
                 if let image = UIImage(data: data) {
                     self.profileImageView.image = image
                 }
